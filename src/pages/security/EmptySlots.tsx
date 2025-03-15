@@ -1,10 +1,8 @@
 
 import React from 'react';
 import { useParking } from '@/contexts/ParkingContext';
-import { ParkingSlot } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Car, CircleParking, Building, User } from 'lucide-react';
+import { Building, Car, CircleParking, User } from 'lucide-react';
 
 const EmptySlots = () => {
   const { parkingLevels } = useParking();
@@ -14,6 +12,25 @@ const EmptySlots = () => {
     (total, level) => total + level.slots.filter(slot => !slot.isOccupied).length, 
     0
   );
+  
+  // Group empty slots by tenant for each level
+  const getEmptySlotsByTenant = (levelIndex: number) => {
+    const level = parkingLevels[levelIndex];
+    const emptySlots = level.slots.filter(slot => !slot.isOccupied);
+    
+    const tenantMap = new Map<string, number>();
+    
+    emptySlots.forEach(slot => {
+      const tenantName = getTenantName(slot.slotNumber);
+      const currentCount = tenantMap.get(tenantName) || 0;
+      tenantMap.set(tenantName, currentCount + 1);
+    });
+    
+    return Array.from(tenantMap.entries()).map(([tenant, count]) => ({
+      tenant,
+      count
+    }));
+  };
   
   return (
     <div className="space-y-6">
@@ -28,7 +45,7 @@ const EmptySlots = () => {
       </div>
       
       <div className="grid gap-6">
-        {parkingLevels.map((level) => (
+        {parkingLevels.map((level, index) => (
           <Card key={level.level}>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
@@ -44,23 +61,22 @@ const EmptySlots = () => {
             <CardContent>
               {level.slots.filter(slot => !slot.isOccupied).length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {level.slots
-                    .filter(slot => !slot.isOccupied)
-                    .map((slot) => (
-                      <div 
-                        key={slot.id}
-                        className="bg-white border border-gray-200 p-4 rounded-lg flex flex-col items-center justify-center h-28 shadow-sm hover:shadow-md transition-shadow"
-                      >
-                        <div className="bg-gray-50 p-2 rounded-full mb-2">
-                          <User className="h-6 w-6 text-parking-empty" />
-                        </div>
-                        <span className="font-semibold text-center text-sm">
-                          {getTenantName(slot.slotNumber)}
-                        </span>
-                        <span className="text-xs text-gray-500 mt-1">Slot {slot.slotNumber}</span>
+                  {getEmptySlotsByTenant(index).map((tenantData, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-white border border-gray-200 p-4 rounded-lg flex flex-col items-center justify-center h-28 shadow-sm hover:shadow-md transition-shadow"
+                    >
+                      <div className="bg-gray-50 p-2 rounded-full mb-2">
+                        <User className="h-6 w-6 text-parking-empty" />
                       </div>
-                    ))
-                  }
+                      <span className="font-semibold text-center text-sm">
+                        {tenantData.tenant}
+                      </span>
+                      <span className="text-xs text-gray-500 mt-1">
+                        {tenantData.count} {tenantData.count === 1 ? 'Slot' : 'Slots'}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <div className="text-center py-8 text-gray-500">
