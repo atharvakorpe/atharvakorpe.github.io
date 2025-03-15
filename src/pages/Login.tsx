@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -5,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { UserRole } from '@/types';
-import { CircleParking } from 'lucide-react';
+import { CircleParking, ArrowLeft } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
@@ -24,10 +25,23 @@ const Login = () => {
     navigate('/');
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
+        <CardHeader className="space-y-1 text-center relative">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute left-0 top-0 m-2" 
+            onClick={handleBack}
+            aria-label="Go back"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
           <div className="flex justify-center mb-4">
             <CircleParking className="h-12 w-12 text-parking-highlight" />
           </div>
