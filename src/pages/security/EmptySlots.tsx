@@ -4,7 +4,7 @@ import { useParking } from '@/contexts/ParkingContext';
 import { ParkingSlot } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Car, Parking } from 'lucide-react';
+import { Car, CircleParking } from 'lucide-react';
 
 const EmptySlots = () => {
   const { parkingLevels } = useParking();
@@ -23,7 +23,7 @@ const EmptySlots = () => {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Empty Parking Slots</h1>
         <div className="flex items-center space-x-2 bg-gray-100 px-3 py-1 rounded-full">
-          <Parking className="h-4 w-4 text-parking-empty" />
+          <CircleParking className="h-4 w-4 text-parking-empty" />
           <span className="text-sm font-medium">
             {parkingLevels.reduce((total, level) => 
               total + level.slots.filter(slot => !slot.isOccupied).length, 0

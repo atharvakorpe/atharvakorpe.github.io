@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
@@ -11,7 +10,7 @@ import {
   LogOut, 
   Menu, 
   X, 
-  Parking,
+  CircleParking,
   ArrowDown
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,7 +35,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   const securityNavItems = [
-    { path: '/', icon: <Parking className="h-5 w-5" />, label: 'Empty Slots' },
+    { path: '/', icon: <CircleParking className="h-5 w-5" />, label: 'Empty Slots' },
     { path: '/request', icon: <Car className="h-5 w-5" />, label: 'Request Entry' },
   ];
 
@@ -74,7 +73,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex h-full flex-col">
           <div className="flex h-16 items-center justify-between border-b px-4">
             <div className="flex items-center space-x-2">
-              <Parking className="h-6 w-6 text-parking-highlight" />
+              <CircleParking className="h-6 w-6 text-parking-highlight" />
               <span className="text-xl font-bold">Parking Pulse</span>
             </div>
             <Button 

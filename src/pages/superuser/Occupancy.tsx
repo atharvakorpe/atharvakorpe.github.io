@@ -13,7 +13,7 @@ import {
   CartesianGrid,
   Legend
 } from 'recharts';
-import { ArrowUp, ArrowDown, Parking } from 'lucide-react';
+import { ArrowUp, ArrowDown, CircleParking } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Occupancy = () => {
@@ -173,7 +173,7 @@ const Occupancy = () => {
                       )}
                       title={`Slot ${slot.slotNumber}`}
                     >
-                      <Parking
+                      <CircleParking
                         className={cn(
                           "h-5 w-5",
                           slot.isOccupied ? "text-red-500" : "text-green-500"

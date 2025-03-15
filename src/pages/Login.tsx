@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { UserRole } from '@/types';
-import { Parking } from 'lucide-react';
+import { CircleParking } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
@@ -30,7 +29,7 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <Parking className="h-12 w-12 text-parking-highlight" />
+            <CircleParking className="h-12 w-12 text-parking-highlight" />
           </div>
           <CardTitle className="text-2xl font-bold">Parking Pulse Admin</CardTitle>
           <CardDescription>Select your role to continue</CardDescription>
